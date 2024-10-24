@@ -22,10 +22,6 @@ export const PropertyList: React.FC = () => {
     dispatch(fetchProperties());
   }, [dispatch]);
 
-  // const handlePropertySelect = (property: Property) => {
-  //   dispatch(setSelectedProperty(property));
-  // };
-
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
