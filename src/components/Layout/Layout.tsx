@@ -1,4 +1,3 @@
-// src/components/Layout/Layout.tsx
 import React from 'react';
 import { 
   Box, 
@@ -12,7 +11,7 @@ import {
   ListItem, 
   ListItemIcon, 
   ListItemText,
-  ListItemButton 
+  ListItemButton
 } from '@mui/material';
 import { 
   Menu as MenuIcon, 
@@ -48,6 +47,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             edge="start"
             onClick={toggleDrawer}
             sx={{ mr: 2 }}
+            aria-label="open drawer"
           >
             <MenuIcon />
           </IconButton>
@@ -61,6 +61,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         anchor="left"
         open={drawerOpen}
         onClose={toggleDrawer}
+        aria-label="navigation drawer"
       >
         <List sx={{ width: 250 }}>
           {menuItems.map((item) => (

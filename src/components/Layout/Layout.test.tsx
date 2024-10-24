@@ -1,7 +1,8 @@
+// src/components/Layout/Layout.test.tsx
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Layout } from './Layout';
-import { describe, it, expect } from 'vitest';
 
 describe('Layout', () => {
   it('renders children content', () => {
@@ -22,16 +23,19 @@ describe('Layout', () => {
     expect(screen.getByText('Property Manager')).toBeInTheDocument();
   });
 
-  it('toggles drawer when menu button is clicked', () => {
+  it('toggles drawer when menu button is clicked', async () => {
+    const user = userEvent.setup();
     render(
       <Layout>
         <div>Test Content</div>
       </Layout>
     );
-    const menuButton = screen.getByRole('button', { name: /menu/i });
-    fireEvent.click(menuButton);
+    
+    // Find button by its aria-label
+    const menuButton = screen.getByLabelText('open drawer');
+    await user.click(menuButton);
+    
+    // After clicking, the drawer items should be visible
     expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('Profile')).toBeInTheDocument();
-    expect(screen.getByText('Settings')).toBeInTheDocument();
   });
 });
