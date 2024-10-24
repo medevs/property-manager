@@ -8,21 +8,23 @@ import {
   CircularProgress
 } from '@mui/material';
 import { PropertyCard } from '@/components/PropertyCard/PropertyCard';
+import { FilterBar } from '@/components/PropertyFilters/FilterBar';
 import { useAppDispatch, useAppSelector } from '@/hooks/store.hooks';
 import { fetchProperties, setSelectedProperty } from '@/store/features/propertySlice';
-import { Property } from '@/types/property.types';
+import { useFilteredProperties } from '@/hooks/useFilteredProperties';
 
 export const PropertyList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { properties, loading, error } = useAppSelector(state => state.property);
+  const { loading, error } = useAppSelector(state => state.property);
+  const filteredProperties = useFilteredProperties();
 
   useEffect(() => {
     dispatch(fetchProperties());
   }, [dispatch]);
 
-  const handlePropertySelect = (property: Property) => {
-    dispatch(setSelectedProperty(property));
-  };
+  // const handlePropertySelect = (property: Property) => {
+  //   dispatch(setSelectedProperty(property));
+  // };
 
   if (loading) {
     return (
@@ -47,17 +49,19 @@ export const PropertyList: React.FC = () => {
           Available Properties
         </Typography>
         
-        {properties.length === 0 ? (
+        <FilterBar />
+        
+        {filteredProperties.length === 0 ? (
           <Typography variant="body1" color="text.secondary">
-            No properties found.
+            No properties found matching your criteria.
           </Typography>
         ) : (
           <Grid container spacing={3}>
-            {properties.map((property) => (
+            {filteredProperties.map((property) => (
               <Grid item xs={12} sm={6} md={4} key={property.id}>
                 <PropertyCard 
                   property={property} 
-                  onSelect={handlePropertySelect} 
+                  onSelect={(property) => dispatch(setSelectedProperty(property))} 
                 />
               </Grid>
             ))}
