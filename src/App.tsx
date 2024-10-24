@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme/theme';
 import Layout from '@/components/Layout/Layout';
+import { PropertyList } from '@/components/PropertyList/PropertyList';
 import { store } from '@/store/store';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Layout>
-          <h1>Welcome to Property Manager</h1>
+          <PropertyList />
         </Layout>
       </ThemeProvider>
     </Provider>

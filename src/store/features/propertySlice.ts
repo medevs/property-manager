@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { PropertyState, Property } from '@/types/property.types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { PropertyState } from '@/types/property.types';
+import { propertyService } from '@/services/api';
 
 const initialState: PropertyState = {
   properties: [],
@@ -20,11 +21,8 @@ export const fetchProperties = createAsyncThunk(
   'property/fetchProperties',
   async (_, { rejectWithValue }) => {
     try {
-      // TODO This will be replaced with actual API call later
-      const response = await fetch('/api/properties');
-      if (!response.ok) throw new Error('Failed to fetch properties');
-      const data = await response.json();
-      return data as Property[];
+      const data = await propertyService.getProperties();
+      return data;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch properties');
     }
@@ -35,10 +33,10 @@ const propertySlice = createSlice({
   name: 'property',
   initialState,
   reducers: {
-    setSelectedProperty: (state, action: PayloadAction<Property | null>) => {
+    setSelectedProperty: (state, action) => {
       state.selectedProperty = action.payload;
     },
-    setFilters: (state, action: PayloadAction<Partial<PropertyState['filters']>>) => {
+    setFilters: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
     },
     resetFilters: (state) => {
