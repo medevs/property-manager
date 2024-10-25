@@ -1,23 +1,26 @@
 import React from 'react';
-import { 
-  Box, 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Container, 
-  IconButton, 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemIcon, 
+import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
   ListItemText,
   ListItemButton
 } from '@mui/material';
-import { 
-  Menu as MenuIcon, 
-  Home as HomeIcon, 
-  Person as PersonIcon, 
-  Settings as SettingsIcon 
+import {
+  Menu as MenuIcon,
+  Home as HomeIcon,
+  Person as PersonIcon,
+  Settings as SettingsIcon,
+  ViewList as PropertiesIcon,
+  Add as AddIcon
 } from '@mui/icons-material';
 import { useState } from 'react';
 
@@ -27,6 +30,8 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -34,9 +39,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const menuItems = [
     { text: 'Home', icon: <HomeIcon />, path: '/' },
+    { text: 'Properties', icon: <PropertiesIcon />, path: '/properties' },
+    { text: 'Add Property', icon: <AddIcon />, path: '/properties/new' },
     { text: 'Profile', icon: <PersonIcon />, path: '/profile' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/settings' }
   ];
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setDrawerOpen(false);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -51,7 +63,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography 
+            variant="h6" 
+            noWrap 
+            component="div"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => handleNavigation('/')}
+          >
             Property Manager
           </Typography>
         </Toolbar>
@@ -66,7 +84,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <List sx={{ width: 250 }}>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton 
+                onClick={() => handleNavigation(item.path)}
+                selected={location.pathname === item.path}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
