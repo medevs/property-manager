@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import {
   Alert,
   SelectChangeEvent,
 } from '@mui/material';
-import { Property } from '@/types/property.types';
+import { Property } from '../../types/property.types';
 
 type PropertyFormData = {
   title: string;
@@ -62,6 +62,15 @@ export default function PropertyForm({ property, onSubmit, isLoading = false }: 
     return initialFormState;
   });
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (property) {
+      setFormData({
+        ...property,
+        price: property.price.toString(),
+      });
+    }
+  }, [property]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
