@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from '@/config/database';
 import { errorHandler } from '@/middleware/error.middleware';
+import propertyRoutes from '@/routes/property.routes';
 
 // Load environment variables
 dotenv.config();
@@ -18,7 +19,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Basic route for testing
+// Routes
+app.use('/api/properties', propertyRoutes);
+
+// Health check route
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Server is running' });
 });
