@@ -1,8 +1,5 @@
 import { Request, Response } from 'express';
-
-export interface CustomError extends Error {
-  statusCode?: number;
-}
+import { CustomError } from '@/utils/custom-error';
 
 export const errorHandler = (
   err: CustomError,
@@ -12,9 +9,10 @@ export const errorHandler = (
   const statusCode = err.statusCode || 500;
   
   res.status(statusCode).json({
-    status: 'error',
+    status: err.status || 'error',
     statusCode,
     message: err.message || 'Internal Server Error',
+    errors: err.errors,
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 };

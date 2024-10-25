@@ -1,8 +1,14 @@
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
 export class CustomError extends Error {
   constructor(
     message: string,
     public statusCode: number = 500,
-    public status: string = 'error'
+    public status: string = 'error',
+    public errors?: ValidationError[]
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -17,7 +23,7 @@ export class NotFoundError extends CustomError {
 }
 
 export class BadRequestError extends CustomError {
-  constructor(message: string = 'Bad request') {
-    super(message, 400, 'bad request');
+  constructor(message: string = 'Bad request', errors?: ValidationError[]) {
+    super(message, 400, 'bad request', errors);
   }
 }
