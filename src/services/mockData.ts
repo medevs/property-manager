@@ -31,7 +31,7 @@ export const mockProperties: Property[] = [
     },
     features: ['4 Bedrooms', '3 Bathrooms', 'Garden', 'Garage'],
     images: ['/api/placeholder/400/200'],
-    status: 'available',
+    status: 'rented',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
