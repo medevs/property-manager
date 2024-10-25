@@ -60,3 +60,52 @@ class PropertyService {
 }
 
 export const propertyService = new PropertyService();
+
+// const API_BASE_URL = 'http://localhost:3001/api';
+
+// class PropertyService {
+//   private async fetchWithErrorHandling<T>(url: string, options?: RequestInit): Promise<T> {
+//     const response = await fetch(url, options);
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       throw new Error(errorData.message || 'An error occurred');
+//     }
+//     return response.json() as Promise<T>;
+//   }
+
+//   async getProperties(): Promise<Property[]> {
+//     return this.fetchWithErrorHandling<Property[]>(`${API_BASE_URL}/properties`);
+//   }
+
+//   async getProperty(id: string): Promise<Property> {
+//     return this.fetchWithErrorHandling<Property>(`${API_BASE_URL}/properties/${id}`);
+//   }
+
+//   async createProperty(propertyData: Partial<Property>): Promise<Property> {
+//     return this.fetchWithErrorHandling<Property>(`${API_BASE_URL}/properties`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(propertyData),
+//     });
+//   }
+
+//   async updateProperty(id: string, propertyData: Partial<Property>): Promise<Property> {
+//     return this.fetchWithErrorHandling<Property>(`${API_BASE_URL}/properties/${id}`, {
+//       method: 'PATCH',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(propertyData),
+//     });
+//   }
+
+//   async deleteProperty(id: string): Promise<void> {
+//     await this.fetchWithErrorHandling<void>(`${API_BASE_URL}/properties/${id}`, {
+//       method: 'DELETE',
+//     });
+//   }
+// }
+
+// export const propertyService = new PropertyService();
